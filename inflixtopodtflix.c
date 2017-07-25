@@ -71,5 +71,31 @@ int priority(char c)
 {
  if(c=='$')
   return 3;
- if(c==') 
+if(c=='/'||c=='*')
+		return 2;
+	 if(c=='+'||c=='-')
+		return 1;
+	 else
+		return 0;
+}
+
+void push(stack *s,char opr)
+{
+	s->top++;
+	s->a[s->top]=opr;
+}
+
+char pop(stack *s)
+{
+	if (s->top==-1)
+	{
+		printf("stack is empty\n");
+		return 0;
+    }
+    else
+    {
+		char data=s->a[s->top--];
+		return data;
+    }
+} 
 
