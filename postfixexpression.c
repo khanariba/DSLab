@@ -7,88 +7,74 @@ typedef struct conversion
    int top;
    }stack;
 
-  void push (stack *,char[]);
+  void push(int, stack *s);
 
-  char pop(stack *s);
- 
-  int operation (int num1, int num2, char opr);
+int pop(stack *s);
 
-  int evaluate (char pop[]);
+int operation(int a, int b, char opr);
+
+int evaluate(char postfix[]);
 
  int main()
    {
-   char postfix[30];
-   printf("ENTER POSTFIX EXPRESSION\n");
-   scanf("%s",postfix);
-   printf("Evaluation of POSTFIX EXPRESSION = %d",evaluate(postfix));
-  return 0;
-  }
+	char postfix[30];
+	printf("\nenter the postfix expression\n");
+	scanf("%s",postfix);
+	printf("Evaluated posfix expression = %d\n",evaluate(postfix));
+	return 0;
+}
 
-
-
-    void push(stack *s,char opr)
+int pop(stack *s)
+{
+    int d,top=s->top;
+    if(top!=-1)
     {
-	  s->top++;
-	  s->a[s->top]=opr;
+		d=s->a[top];
+        s->top=s->top-1;
+		return d;
     }
+}
 
-    char pop(stack *s)
-   {
-	 if (s->top==-1);
+void push(int e, stack *s)
+{
+    int top=s->top;
+    if(top<29)
 	{
-		printf("stack is empty\n");
-		return 0;
-         }
-         else
-        {
-		char data=s->a[s->top--];
-		return data;
-        }
-   } 
+		s->a[++(s->top)]=e;
+	}
+}
 
-   int res,n1,n2,opr;
-  struc stack *s;
-  int evaluate(char pos[*s]);
+int operation(int a, int b, char opr)
+{
+	switch(opr)
+	{
+		case '+': return a+b;
+		break;
+		case '-': return a-b;
+		break;
+		case '*': return a*b;
+		break;
+		case '/': return a/b;
+		break;
+	}
+	return 0;
+}
 
-   while(pos[*s] != '\0')
-        {
-                if(isdigit(opr))
-                {
-                        num = *s- o;
-                        push(num);
-                }
-                else
-                {
-                        n1 = pop();
-                        n2 = pop();
-                        switch(opr)
-                        {
-                                case '+':
-                                {
-                                        n3 = n1 + n2;
-                    break;
-                                }
-                                case '-':
-                                {
-                                        n3 = n2 - n1;
-                                        break;
-                                }
-                                case '*':
-                                {
-                                        n3 = n1 * n2;
-                                        break;
-                                }
-                                case '/':
-                                {
-                                        n3 = n2 / n1;
-                                        break;
-                                }
-                        }
-                        push(n3);
-                }
-                i++;
-        }
-        printf("\nThe result of expression %s  =  %d\n\n",exp,pop());
-        return 0;
- 
-
+int evaluate(char postfix[30])
+{
+	int i,a,b,result;
+	stack s;
+	for(i=0;postfix[i]!='\0';i++)
+	{
+		if(isdigit(postfix[i]))
+			push(postfix[i]-'0',&s);
+		else 
+		{
+			a=pop(&s);
+			b=pop(&s);
+			result=operation(a,b,postfix[i]);
+			push(result,&s);
+		}
+	}
+	return pop(&s);
+}
