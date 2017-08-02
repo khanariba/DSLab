@@ -1,32 +1,27 @@
-#include<stdio.h>
-#include<ctype.h> // for isalpha() function
-
+#include <stdio.h>
+#include <ctype.h>
 typedef struct conversion
-  {
-   char a[30];
-   int top;
-   }stack;
+{
+	char a[30];
+	int top;
+}stack;
 
-  void push(int, stack *s);
+void push(char, stack *s);
+void checkcontinuity(char[]);
+char pop(stack *s);
 
-  int pop(stack *s);
-
-  void check continuity (char exp[]);
-
-  int isMaking pair (char left,char right)
-
-  int main()
-   {
+ main()
+{
 	char exp[30];
-	printf("\n Enter an expression containing only brackets\n");
+	printf("\nenter an expression containing only brackets\n");
 	scanf("%s",exp);
-	check continuity (char exp[]);
+	checkcontinuity(exp);
+	return 0;
 }
 
-int pop(stack *s)
+char pop(stack *s)
 {
-    char d;
-    int top=s->top;
+    int d,top=s->top;
     if(top!=-1)
     {
 		d=s->a[top];
@@ -35,7 +30,7 @@ int pop(stack *s)
     }
 }
 
-void push(int e, stack *s)
+void push(char e, stack *s)
 {
     int top=s->top;
     if(top<29)
@@ -43,49 +38,58 @@ void push(int e, stack *s)
 		s->a[++(s->top)]=e;
 	}
 }
-
-int isMaking pair (char left,char right)
-
+int ismatching(char left,char right)
 {
-	switch(left)
-	{
-		case '(':  if(right==')')
-                  return 1;
-                    else
-                   return 0;
-		break;
-		case '[': if(right==']')
-                  return 1;
-                    else
-                   return 0;
-		break;
-		case '{': if(right==']')
-                  return 1;
-                    else
-                   return 0;
-		break;
+switch(left)
+{
+case'(':if(right==')')
+        return 1;
+        else 
+        return 0;
+        break;
+case'[':if(right==']')
+        return 1;
+        else 
+        return 0;
+        break;
+case'{':if(right=='}')
+        return 1;
+        else 
+        return 0;
+        break;
+default:return 0;
+}
+}
+void checkcontinuity(char exp[])
+{
+int i;
+char c;
+stack s;
+s.top=-1;
+for(i=0;exp[i]!='\0';i++)
+{
+if(exp[i]=='('||exp[i]=='['||exp[i]=='{')
+push(&s,exp[i]);
+else
+if(s.top==-1)
+c=pop(exp[i]);
+else
+{
+printf("invalid expression");
+return 0;
+if(c==exp[i])
+continue;
+else
+printf("invalid expression");
+return 0;
+if(isempty(s))
+printf("valid expression");
+else
+printf("invalid expression");
+}
+}
 }
 
-void check continuity (char exp[]);
 
-{
-	int i,c;
-	stack s;
-	for(i=0;exp[i]!='\0';i++)
-	{
-		if(exp[i] == '(' || exp[i]'{'|| exp[i]'[')
-			push(exp[i]);
-		else 
-		{
-		   if(isEmpty(stack s))
-                     c <- pop()
-                    else
-                      invalid;
-                }
-                 if ( ( exp[i] )
-                    continue;
-                 else 
-                    invalid
-	}
-	return pop(&s);
-}
+
+
