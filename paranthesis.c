@@ -7,19 +7,24 @@ typedef struct conversion
 }stack;
 
 void push(char, stack *s);
-void checkcontinuity(char[]);
+
 char pop(stack *s);
 
- main()
+int isMatchingpair(char left, char right);
+	
+
+
+
+int main()
 {
 	char exp[30];
-	printf("\nenter an expression containing only brackets\n");
+	printf("\nenter expresssion containing parenthisis \n ");	
 	scanf("%s",exp);
-	checkcontinuity(exp);
+	checkBalance(exp);
 	return 0;
 }
 
-char pop(stack *s)
+int pop(stack *s)
 {
     int d,top=s->top;
     if(top!=-1)
@@ -28,9 +33,10 @@ char pop(stack *s)
         s->top=s->top-1;
 		return d;
     }
+
 }
 
-void push(char e, stack *s)
+void push(int e, stack *s)
 {
     int top=s->top;
     if(top<29)
@@ -38,58 +44,66 @@ void push(char e, stack *s)
 		s->a[++(s->top)]=e;
 	}
 }
-int ismatching(char left,char right)
+int isMatchingpair(char left, char right)
 {
-switch(left)
-{
-case'(':if(right==')')
-        return 1;
-        else 
-        return 0;
-        break;
-case'[':if(right==']')
-        return 1;
-        else 
-        return 0;
-        break;
-case'{':if(right=='}')
-        return 1;
-        else 
-        return 0;
-        break;
-default:return 0;
+	switch(left)
+	{
+		case '(':
+			if(right==')')
+				return 1;
+                        else 
+				return 0;
+		case '{': 
+			if(right=='}')
+				return 1;
+			else
+				return 0;	
+		case '[': 
+			if(right==']')
+				return 1;
+			else
+				return 0;
+		default :
+				return 0;	
+	}
+	return 0;
 }
+void CheckBalance(char exp[])
+{	 int i;
+	stack s;	
+	char c;
+	s.top=-1;
+			
+	for(i=0;i<='\0';i++)
+	{	if(exp[i]=='(' || exp[i]=='{' || exp[i]=='[')
+			push(exp[i],&s);
+		else 
+		{
+			if(s.top==-1)
+			{ 	printf("Expression is Invalid \n");
+				return;
+			}
+			
+			c=pop(&s);
+
+			if(isMatchingpair(c,exp[i]))
+			continue;
+			else
+			{
+				printf("INVALID EXPRESSION \n");
+				return;
+			}
+			
+		}
+	}
 }
-void checkcontinuity(char exp[])
-{
-int i;
-char c;
-stack s;
-s.top=-1;
-for(i=0;exp[i]!='\0';i++)
-{
-if(exp[i]=='('||exp[i]=='['||exp[i]=='{')
-push(&s,exp[i]);
+if(s.top!=-1)
+printf("EXPRESSION IS INVALID \n");
 else
-if(s.top==-1)
-c=pop(exp[i]);
-else
-{
-printf("invalid expression");
-return 0;
-if(c==exp[i])
-continue;
-else
-printf("invalid expression");
-return 0;
-if(isempty(s))
-printf("valid expression");
-else
-printf("invalid expression");
-}
-}
+printf("EXPRESSION IS VALID \n");
 }
 
+				
+	
 
-
-
+	
