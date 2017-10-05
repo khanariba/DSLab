@@ -1,128 +1,114 @@
-#include<stdio.h>
-#include<stdlib.h>
-
+//program to implement Binary Search Tree
+#include <stdio.h>
+#include <stdlib.h>
 typedef struct bst
 {
 	int data;
-	struct bst*left,*right;
+	struct bst *left, *right;
 }node;
-void traverse_inorder(node*q)
+node * create(int d)
 {
-	if(q!=NULL)
-	{
-	traverse_inorder(q->left);
-	printf("%d\t",q->data);
-	traverse_inorder(q->right);
-    }
+	node *ptr;
+	ptr=(node*)malloc(sizeof(node));
+	ptr->data=d;
+	ptr->left=NULL;
+	ptr->right=NULL;
+	return ptr;
 }
-	
-void insert(node**r,int num)
+void traverse_inorder(node *r)
 {
-	node*temp,*ptr;
+	if(r!=NULL)
+	{
+		traverse_inorder(r->left);
+		printf("%d\t",r->data);
+		traverse_inorder(r->right);
+	}
+}
+void insert(node **r, int d)
+{
+	node *temp, *ptr;
 	temp=*r;
-	
 	if(temp==NULL)
-	*r=ptr;
+	{
+		ptr=create(d);
+		*r=ptr;
+	}
 	else
 	{
-		if(num>temp->data)
+		if(d>temp->data)
 		{
 			if(temp->right==NULL)
 			{
-			ptr=(node*)malloc(sizeof(node));
-			ptr->data=num;
-			ptr->left=NULL;
-			ptr->right=NULL:
-			temp->right=ptr;
-			return;
-		}
-				else
-				{
+				ptr=create(d);
+				temp->right=ptr;
+				return;
+			}
+			else
+			{
 				temp=temp->right;
-				insert(&temp,num);
+				insert(&temp,d);
 			}
 		}
-			if(temp->left!=NULL)
-			{
-			temp=temp->left;
-			insert(&temp,num);
-		}
-	}
-}
-int search_bst(node*q)
-{
-	if(q==NULL)
-	return -1;
-	else
-	{
-		if(temp->data==num)
-		return 1;
 		else
 		{
-			if(num>q->data)
+			if(temp->left==NULL)
 			{
-				search_bst(q->right,num);
-			}
-			else
-			{
-				search_bst(q->left,num);
+				ptr=create(d);
+				temp->left=ptr;
+				return;
 			}
 		}
 	}
 }
-			
-
-void delete(node**q,int num)
+void insert(node **r, int d)
 {
-	node*temp;
-	temp=*q;
+	node *temp;
+	temp=*r;
 	if(temp==NULL)
 	{
-		printf("\nThe given no. is not found");
-		return;
+		printf("The given number is not found\n");
+		return; 
 	}
 	else
 	{
-		if(temp->data==num)
+		if(temp->data==d)
 		{
 			if(temp->left==NULL&&temp->right==NULL)
-			free(temp);
-			
-	else
-	{
-			if(num>q->data)
-			{
-				delete(q->right,num);
-			}
-			else
-			{
-			           delete(q->left,num);
-			}
+				free(temp);
 		}
+		else
+		{
+			if(d>temp->data)
+				delete(r->right,d);
+			else
+				delete(r->left,d);
+			
 	}
 }
-
+int search(node *r, int d)
+{
+	if(r==NULL)
+		return -1;
+	else
+	{
+		if(r->data==d);
+			return 1;
+		if(d>r->data)
+			search(r->right,d);
+		else
+			search(r->left,d);
+	}
+}
 int main()
 {
-	
-	node*root;
+	node *root;
 	root=NULL;
 	insert(&root,5);
 	insert(&root,6);
 	insert(&root,7);
 	traverse_inorder(root);
+	if(search(root,7))
+		printf("the number is found\n");
+	else
+		printf("numbernot found\n");
 	return 0;
-	if(search_bst(root 7)==1)
-		printf("The number %d is present in the tree",7);
-		else
-		printf("The number %d is not present in the tree",7);
-		return 0;
-}
-
-
-
-
-
-
-	 
-	  
